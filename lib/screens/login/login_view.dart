@@ -33,35 +33,40 @@ class LoginView extends StatelessWidget {
       child: BlocConsumer<AuthCubit,AuthState>(
         listener:(context, state) {
           if(state is SuccessState){
-            if(state.authModel.message=="Logged In"){
-              print(AuthCubit.get(context).authModel?.message);
-              // print(state.authModel.message);
-              print('happy');
 
-              // Fluttertoast.showToast(
-              //     msg: AuthCubit.get(context).authModel!.message!,
-              //     toastLength: Toast.LENGTH_LONG,
-              //     gravity: ToastGravity.BOTTOM,
-              //     timeInSecForIosWeb: 5,
-              //     backgroundColor: Colors.green,
-              //     textColor: Colors.white,
-              //     fontSize: 16.0
-              // );
-            }
-            else{
-              print('sad');
+
+            if(AuthCubit.get(context).authModel!.message=="Logged In"){
+              print(AuthCubit.get(context).authModel?.message);
               print(state.authModel.message);
+              print('happy');
               Fluttertoast.showToast(
-                  msg: state.authModel.message!,
+                  msg: AuthCubit.get(context).authModel!.message!,
                   toastLength: Toast.LENGTH_LONG,
                   gravity: ToastGravity.BOTTOM,
                   timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.red,
+                  backgroundColor: Colors.green,
                   textColor: Colors.white,
                   fontSize: 16.0
               );
-           }
+                Navigator.push(context,MaterialPageRoute(builder: (context) => const Layers(),) );
+            }
+
+
+          else if(AuthCubit.get(context).authModel!.message=="national id or password is incorrect"){
+            print('sad');
+          //  print(state.AuthCubit.get(context).authModel!.message!);
+            Fluttertoast.showToast(
+                msg: AuthCubit.get(context).authModel!.message!,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
           }
+          }
+
         },
         builder: (context, state) {
             return Scaffold(
@@ -182,8 +187,8 @@ class LoginView extends StatelessWidget {
                             color: ColorManager.blueArrow,
                             onTap: () async {
                               if (formKey.currentState!.validate()) {
-                                AuthCubit.get(context).userLogin(password: passAddress.text, ssid: ssidAddress.text);
-                                Navigator.push(context,MaterialPageRoute(builder: (context) => const Layers(),) );
+                                AuthCubit.get(context).PostDataLogin(NatinalID:ssidAddress.text,PassWoard:passAddress.text  );
+
                               }
                             },
                           ),

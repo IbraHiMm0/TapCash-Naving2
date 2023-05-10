@@ -13,7 +13,7 @@ class LayerCubit extends Cubit<LayerState> {
   static LayerCubit get(context) => BlocProvider.of(context);
   int currentIndex = 0;
   //Screens Button Nav Bar
-  List<Widget> screens = const [Home(), Analytics(), CardScreen(), Settings()];
+  List<Widget> screens = const [Home(), AnalyticsScreen(), CardScreen(), Settings()];
 // method to move between Screens
   void changeIconBottonNav(index) {
     currentIndex = index;

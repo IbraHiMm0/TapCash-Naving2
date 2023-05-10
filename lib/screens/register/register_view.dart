@@ -3,6 +3,8 @@ import 'package:demo/presentation/resources/string_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import '../../Data/Model/authModel/auth_model.dart';
+import '../../Shared/dio_helper/DioHelper.dart';
 import '../../presentation/resources/assets_manager.dart';
 import '../../presentation/resources/color_manager.dart';
 import '../../presentation/resources/routes_manager.dart';
@@ -35,8 +37,25 @@ TextEditingController _pass = TextEditingController();
 TextEditingController _repeatedPass = TextEditingController();
 TextEditingController user = TextEditingController();
 TextEditingController user1 = TextEditingController();
+AuthModel? authModel;
+void PostRegister({dynamic fName,dynamic lName,dynamic NaId,dynamic E_mail,dynamic Phone,dynamic pass, dynamic cofPss}){
+  DioHelper.postData(url:'/api/v1/auth/signup',data: {
+    "name":fName,
+    "email":E_mail,
+    "ssid":NaId,
+    "password":pass,
+    "confirmPassword":cofPss,
+    "phone":Phone,
+    "role":"child",
+    "parent":NaId
+  }).then((value){
+    authModel=AuthModel.fromJson(value.data);
+    print(value.data);
 
+  }).catchError((e){
 
+  });
+}
 String? choose; //no radio button will be selected on initial
 
 class _RegisterViewState extends State<RegisterView> {
